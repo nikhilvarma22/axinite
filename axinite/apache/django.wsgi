@@ -1,5 +1,5 @@
 """
-WSGI config for citysom project.
+WSGI config for axinite project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
