@@ -16,7 +16,7 @@ framework.
 
 
 import os, sys
-path = '/home/vermani/axinite/'
+path = '/home/axinite/axinite/'
 if path not in sys.path:
     sys.path.append(path)
 
