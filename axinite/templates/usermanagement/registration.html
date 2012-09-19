@@ -1,0 +1,67 @@
+<html>
+	
+	<head>
+		
+	</head>
+	<body>
+			<div style="width: 1000px;margin:0 auto;">
+				<div id="header" style="height:20px;width:100%;background:#EBEBEB;padding:10px">
+					<div id='logo' style="float:left">
+						AXINITE
+					</div>
+					<div id='login_panel' style="float:right">
+						<label>Username</label><input />
+						<label>password</label><input />
+					</div>
+				</div>
+			<div id="content" style="height:550px;width:100%;margin-top:5px">
+				<div id='right_content'  style='float:right;border:1px solid #EBEBEB'>
+						<div style="text-align: center;margin:10px">
+							Register Yourself !
+						</div>
+						<form name="/registration" action="" method="post">
+							{% csrf_token %}
+							{{ signup_form.non_field_errors }}
+							<table>
+								{%for field in signup_form %}
+								
+								<tr>
+									<td>
+										{{field.label}}			
+									</td>
+									<td>
+										{{field}}
+										{{field.errors}}
+									</td>
+									<td>
+										
+									</td>
+								</tr>
+								{% endfor %}
+								<tr>
+									<td colspan=2>
+										<input type="submit" value="SignUp" text="SignUp" />
+									</td>
+								</tr>
+							</table>
+						</form>
+				</div>
+
+			</div>
+			<div id="footer" style="background:#EBEBEB">
+				<a href="">About Us</a>
+				<a href="">Contact Us</a>
+			</div>
+		
+		</div>
+	</body>	
+	
+</html>
+
+
+
+
+
+
+
+
