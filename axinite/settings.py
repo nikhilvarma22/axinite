@@ -185,4 +185,4 @@ try:
 except:
     pass
 
-HOST = "www.axinite.com"
+HOST = "126.114.126.23:6660"

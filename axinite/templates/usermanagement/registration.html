@@ -1,67 +1,57 @@
 <html>
-	
-	<head>
-		
-	</head>
+	<head></head>
 	<body>
-			<div style="width: 1000px;margin:0 auto;">
-				<div id="header" style="height:20px;width:100%;background:#EBEBEB;padding:10px">
-					<div id='logo' style="float:left">
+		<div id='container' style='width:1000px;border:1px solid #EBEBEB;margin:0 auto;'>
+			<div id='header' style="width:100%;height:50px;background: #EBEBEB">
+				<div id='logo' style="float:left;margin-top:10px;margin-left:50px;">
 						AXINITE
 					</div>
-					<div id='login_panel' style="float:right">
-						<label>Username</label><input />
-						<label>password</label><input />
-					</div>
-				</div>
-			<div id="content" style="height:550px;width:100%;margin-top:5px">
-				<div id='right_content'  style='float:right;border:1px solid #EBEBEB'>
-						<div style="text-align: center;margin:10px">
-							Register Yourself !
-						</div>
-						<form name="/registration" action="" method="post">
+					<div id='login_panel' style="float:right;margin-top:10px;">
+						<form action='/login/' method='post'>
 							{% csrf_token %}
-							{{ signup_form.non_field_errors }}
-							<table>
-								{%for field in signup_form %}
-								
-								<tr>
-									<td>
-										{{field.label}}			
-									</td>
-									<td>
-										{{field}}
-										{{field.errors}}
-									</td>
-									<td>
-										
-									</td>
-								</tr>
-								{% endfor %}
-								<tr>
-									<td colspan=2>
-										<input type="submit" value="SignUp" text="SignUp" />
-									</td>
-								</tr>
-							</table>
+							<label>Username</label><input name='username'/>
+							<label>password</label><input type = "password" name='password' size="25" />
+							<input type="submit" value="SignIn" text="SignIn" />
 						</form>
+					</div>
+			</div>
+			<div id='content'>
+				<div id='left_content' style='width:490px;float:left'>
+					<img style='margin-left:50px;margin-top:50px;' src='http://www.freeppt.net/template/connected-social-network-templates-for-powerpoint.jpg'>
 				</div>
-
+				<div id='right_content' style='margin-top:10px;width:325px;float:right;border:1px solid #EBEBEB'>
+					<div style="text-align: center;margin:10px">
+						Register Yourself !
+					</div>
+					<form name="/registration" action="" method="post">
+						{% csrf_token %}
+						{{ signup_form.non_field_errors }}
+						<table>
+							{%for field in signup_form %}
+							
+							<tr>
+								<td>
+									{{field.label}}			
+								</td>
+								<td>
+									{{field}}
+									{{field.errors}}
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+							{% endfor %}
+							<tr>
+								<td colspan=2>
+									<input type="submit" value="SignUp" text="SignUp" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
 			</div>
-			<div id="footer" style="background:#EBEBEB">
-				<a href="">About Us</a>
-				<a href="">Contact Us</a>
-			</div>
-		
+			<div id='footer'></div>
 		</div>
-	</body>	
-	
+	</body>
 </html>
-
-
-
-
-
-
-
-

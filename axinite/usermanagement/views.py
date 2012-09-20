@@ -1,15 +1,16 @@
 # Create your views here.
-from axinite.usermanagement.forms import SignUpForm, AdditionalSignUpForm
+from axinite.usermanagement.forms import SignUpForm, AdditionalSignUpForm, LoginForm
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
 from axinite.utilities.email_messages import REGISTRATION_VERIFICATION_EMAIL
 from axinite.utilities.emails import send_registration_email
 from axinite.utilities.key import get_verification_key
 from axinite.settings import BASE_URL
-
 from axinite.usermanagement.models import UserProfile
+
 
 def accountcreation(request):
     """
@@ -37,6 +38,21 @@ def accountcreation(request):
                               context_instance=RequestContext(request)
                               )
     
+
+def login_user(request):
+    
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render_to_response("usermanagement/profile.html")
+        else:
+            return render_to_response("usermanagement/disabled.html")
+    else:
+        return render_to_response("usermanagement/invalid.html")
+
 
 def registration(request):
     """
