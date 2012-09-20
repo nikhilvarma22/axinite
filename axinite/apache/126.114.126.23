@@ -1,8 +1,8 @@
 <VirtualHost *:80>
    ServerName 126.114.126.23
-   ServerAlias 126.114.126.23.*.com
-   ServerAdmin 126.114.126.23@126.114.126.23.com
-
+   ServerAlias *.126.114.126.23
+   ServerAdmin axinite@126.114.126.23
+   
    DocumentRoot /home/axinite/axinite/axinite/
 
 
@@ -20,7 +20,7 @@
 
    WSGIDaemonProcess 126.114.126.23 user=axinite group=axinite processes=5 threads=1 maximum-requests=100
    WSGIProcessGroup  126.114.126.23
-   WSGIScriptAlias / /home/axinite/axinite/axinite/django.wsgi
+   WSGIScriptAlias / /home/axinite/axinite/axinite/apache/django.wsgi
 
    <Directory /home/axinite/axinite/axinite/apache>
       Order allow,deny
