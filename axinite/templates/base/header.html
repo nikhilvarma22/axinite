@@ -1,0 +1,56 @@
+<style>
+	#logo_panel, #login_panel{
+		width: 50%;
+		float:left;
+		
+	}
+	#login_panel *{
+		height: 25px;
+		width: 150px;
+		font-size: .98em !important;
+	}
+	.sconnect{
+		width: 18px !important;
+		height: 18px !important;
+	}
+</style>
+<div id='logo_panel'>
+	AxInItE
+</div>
+<div id='login_panel'>
+	<form name="login" action="" method="post">
+	{% csrf_token %}
+	{{ form_login.non_field_errors }}
+	<table>
+		
+		<tr>
+			{%for field in form_login %}
+			<td>
+				{{field.label}}			
+				{{field.errors}}
+				{{field}}
+			</td>
+			{% endfor %}
+			<td>
+				<label>&nbsp;</label>
+				<input type='hidden' name='formname' value='login'>
+				<input type="submit" class='k-button' value="Login" text="Login" />
+			</td>
+		</tr>
+		<tr>
+			<td>Login with:</td>
+			<td>
+				<a href='/axlogin'>
+					<img class='sconnect' src='http://cdn.jeepforum.com/images/facebook_icon.gif'/>
+				</a>
+			</td>
+			<td>
+				<a href='/axlogin'>
+					<img class='sconnect' src='http://www.foundhistory.org/wp-content/themes/cutline_mod/images/Twitter_32x32.png'/>
+				</a>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</form>
+</div>

@@ -1,0 +1,46 @@
+{%extends 'base/skeleton.html'%}
+{% block html_body%}
+<center>
+	
+	<form name="/registration" action="" method="post">
+		{% csrf_token %}
+		{{ login_form.non_field_errors }}
+		<table>
+			{%for field in login_form %}
+			<tr>
+				<td>
+					{{field.label}}			
+				</td>
+				<td>
+					{{field}}
+					{{field.errors}}
+				</td>
+			{% endfor %}
+				<td colspan=2>
+					<input type='hidden' name='formname' value='login'>
+					<input type="submit" class='k-button' value="Login" text="Login" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan=3>
+					<br>
+					<center>
+						OR
+					</center>
+					<hr>
+				</td>
+				
+			</tr>
+			<tr>
+				<td colspan=3>
+					<a href="{% url socialauth_begin 'facebook' %}"><img src='http://ak.imgag.com/imgag/eg/new_site/fb_connect.png'/></a>
+					<br>
+					<br>
+					<a href="{% url socialauth_begin 'twitter' %}"><img src='http://twitterfall.com/twitterlogin.png'/></a><br>
+					
+				</td>
+			</tr>
+		</table>
+	</form>
+</center>
+{% endblock html_body%}

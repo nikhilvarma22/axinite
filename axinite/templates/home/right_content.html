@@ -1,0 +1,28 @@
+<div id='registration_form_container' class='k-block k-shadow'>
+	<form name="/registration" action="" method="post">
+		{% csrf_token %}
+		{{ form_registration.non_field_errors }}
+		<table>
+			{%for field in form_registration %}
+			<tr>
+				<td>
+					{{field.label}}			
+				</td>
+				<td>
+					{{field}}
+					{{field.errors}}
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan=2>
+					<input type='hidden' name='formname' value='registration'>
+					<input type="submit" class='k-button' value="Sign Up" text="Sign Up" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>

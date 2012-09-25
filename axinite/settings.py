@@ -18,12 +18,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'dbaxinite',                      # Or path to database file if using sqlite3.
+        'USER': 'axuser',                      # Not used with sqlite3.
+        'PASSWORD': 'silver',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -134,7 +134,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'axinite.usermanagement'
+    'home',
+    'axusers',
+    'social_auth'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -166,23 +168,87 @@ LOGGING = {
     }
 }
 
+# Axinite Email Settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'axinites@gmail.com'
+EMAIL_HOST_PASSWORD = 'axinite@123'
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = '[Axinite Registration]'
 
-import os.path
-LOCAL_SETTINGS = os.path.join(os.path.dirname(__file__), "local_settings") + ".py"
-if not os.path.exists(LOCAL_SETTINGS):
-    msg = (
-    """\nWarning: Can't find the expected local Django settings file:    \n%s\n"""
-    % (LOCAL_SETTINGS)
-    )
-    print msg
-    del msg
-    SETTINGS_LOCAL = ""
-else:
-    # If this raises an exception, we simply let it bubble up.
-    execfile(LOCAL_SETTINGS)
-try:
-    from local_settings import *
-except:
-    pass
+USER_KEY_EXPIRATION_DAYS = 2
 
-HOST = "126.114.126.23:6660"
+LOGIN_URL='/axlogin'
+LOGIN_REDIRECT_URL = '/axprofile/'
+LOGIN_ERROR_URL    = '/login_error/'
+
+#SOCIAL AUTH
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    'social_auth.backends.contrib.orkut.OrkutBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.vkontakte.VKontakteBackend',
+    'social_auth.backends.contrib.live.LiveBackend',
+    'social_auth.backends.contrib.skyrock.SkyrockBackend',
+    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+#SOCIAL AUTH API-KEYS
+
+TWITTER_CONSUMER_KEY         = 'abaxVNDyrsccwPQ0513w'
+TWITTER_CONSUMER_SECRET      = 'cYNBxq3gLhFZ2p0wwAxsn20Bw1N7F5ZoslJROeY02Ls'
+FACEBOOK_APP_ID              = '291736230936260'
+FACEBOOK_API_SECRET          = 'd1aabd88ce49bdf8e24263d6f8776f5c'
+LINKEDIN_CONSUMER_KEY        = ''
+LINKEDIN_CONSUMER_SECRET     = ''
+ORKUT_CONSUMER_KEY           = ''
+ORKUT_CONSUMER_SECRET        = ''
+GOOGLE_CONSUMER_KEY          = ''
+GOOGLE_CONSUMER_SECRET       = ''
+GOOGLE_OAUTH2_CLIENT_ID      = ''
+GOOGLE_OAUTH2_CLIENT_SECRET  = ''
+FOURSQUARE_CONSUMER_KEY      = ''
+FOURSQUARE_CONSUMER_SECRET   = ''
+VK_APP_ID                    = ''
+VK_API_SECRET                = ''
+LIVE_CLIENT_ID = ''
+LIVE_CLIENT_SECRET = ''
+SKYROCK_CONSUMER_KEY      = ''
+SKYROCK_CONSUMER_SECRET   = ''
+YAHOO_CONSUMER_KEY        = ''
+YAHOO_CONSUMER_SECRET     = ''
+
+
+
+
+#import os.path
+#LOCAL_SETTINGS = os.path.join(os.path.dirname(__file__), "local_settings") + ".py"
+#if not os.path.exists(LOCAL_SETTINGS):
+#    msg = (
+#    """\nWarning: Can't find the expected local Django settings file:    \n%s\n"""
+#    % (LOCAL_SETTINGS)
+#    )
+#    print msg
+#    del msg
+#    SETTINGS_LOCAL = ""
+#else:
+#    # If this raises an exception, we simply let it bubble up.
+#    execfile(LOCAL_SETTINGS)
+#try:
+#    from local_settings import *
+#except:
+#    pass
+#
+#HOST = "126.114.126.23:6660"
+BASE_URL = "127.0.0.1:8080"

@@ -1,1 +1,0 @@
-# This directory stores all the mandatory scripts like db update , git pull, git push etc 
