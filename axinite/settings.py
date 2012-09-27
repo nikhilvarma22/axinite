@@ -214,8 +214,8 @@ LINKEDIN_CONSUMER_KEY        = ''
 LINKEDIN_CONSUMER_SECRET     = ''
 ORKUT_CONSUMER_KEY           = ''
 ORKUT_CONSUMER_SECRET        = ''
-GOOGLE_CONSUMER_KEY          = ''
-GOOGLE_CONSUMER_SECRET       = ''
+GOOGLE_CONSUMER_KEY          = 'clinic24x7.com'
+GOOGLE_CONSUMER_SECRET       = 'qCPXLKndVt9cdK-oeLn4cIGg'
 GOOGLE_OAUTH2_CLIENT_ID      = ''
 GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 FOURSQUARE_CONSUMER_KEY      = ''
@@ -228,9 +228,6 @@ SKYROCK_CONSUMER_KEY      = ''
 SKYROCK_CONSUMER_SECRET   = ''
 YAHOO_CONSUMER_KEY        = ''
 YAHOO_CONSUMER_SECRET     = ''
-
-
-
 
 #import os.path
 #LOCAL_SETTINGS = os.path.join(os.path.dirname(__file__), "local_settings") + ".py"
