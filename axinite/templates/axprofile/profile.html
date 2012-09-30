@@ -1,12 +1,63 @@
-<center>
-	Welcome to your profile {{first_name}} {{last_name}}
-</center>
+{%extends 'base/skeleton.html'%}
+{% block header %}
+{% endblock header %}
+{% block content%}
+<style>
+	#container{
+		width: 1000px !important;
+		margin: 0 auto;
+		padding: 0px;
+		height: 800px;
+		border: 1px solid #CCC;
+	}
+	
+	#left_content, #right_content{
+		width: 196px;
+	}
+	#content{
+		width: 599px;
+		
+	}
+	#left_content, #right_content,#content{
+		float:left;
+		height: 800px;
+	}
+	#logout{
+		float:right;
+	}
+	
+	#list_friends{
+		list-style-type: none;
+		position: relative;
+		top: 100px;
+		overflow:scroll;
+		height: 500px;
+		width: 160px;
+	}
+	#list_friends>li{
+		margin-top:2px;
+	}
+</style>
 
-<br/>
-<br/>
-<br/>
-<center>
-	<a href='/logout'>
-		Logout
-	</a>
-</center>
+<div id='container'>
+	<div id='left_content'>
+		<img height='200px' width='200px' src='{{profile_photo}}'/>
+	</div>
+	
+	<div id='content'>
+		<center>Welcome to your profile {{first_name}} {{last_name}} </center>	
+	</div>
+	
+	<div id='right_content'>
+		<a id="logout" href='/logout'>Logout</a>
+			<h3>Your Friends</h3>
+			<ul id='list_friends'>
+			{% for friend in friends %}
+				<li>{{friend}}</li>
+				<hr>
+			{% endfor %}
+			</ul>
+	</div>
+</div>
+
+{% endblock content%}

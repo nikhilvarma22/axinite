@@ -1,5 +1,6 @@
 import os
 import sys
+import os.path
 
 # Dynamically set project path
 PROJECT_PATH, filename = os.path.split(__file__)
@@ -66,11 +67,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = "axinite/static"
+STATIC_ROOT = ""
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = '/media/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -136,7 +137,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'home',
     'axusers',
-    'social_auth'
+    'social_auth',
+    'axprofile'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -175,6 +177,8 @@ LOGIN_URL='/axlogin'
 LOGIN_REDIRECT_URL = '/axprofile/'
 LOGIN_ERROR_URL    = '/login_error/'
 
+AUTH_PROFILE_MODULE = 'dbaxinite.UserProfile'
+
 #SOCIAL AUTH
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
@@ -197,8 +201,19 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-#SOCIAL AUTH API-KEYS
+SOCIAL_AUTH_PIPELINE = (
+'social_auth.backends.pipeline.social.social_auth_user',
+#'social_auth.backends.pipeline.associate.associate_by_email',
+'social_auth.backends.pipeline.user.get_username',
+'social_auth.backends.pipeline.user.create_user',
+'axinite.axusers.views.get_user_friends',
+'social_auth.backends.pipeline.social.associate_user',
+'social_auth.backends.pipeline.user.update_user_details',
+'axinite.axusers.views.get_user_avatar',
+)
 
+    
+#SOCIAL AUTH API-KEYS
 TWITTER_CONSUMER_KEY         = 'abaxVNDyrsccwPQ0513w'
 TWITTER_CONSUMER_SECRET      = 'cYNBxq3gLhFZ2p0wwAxsn20Bw1N7F5ZoslJROeY02Ls'
 FACEBOOK_APP_ID              = '291736230936260'
@@ -221,9 +236,7 @@ SKYROCK_CONSUMER_KEY      = ''
 SKYROCK_CONSUMER_SECRET   = ''
 YAHOO_CONSUMER_KEY        = ''
 YAHOO_CONSUMER_SECRET     = ''
-
-
-import os.path
+#---------------------------------------------------------------------------------
 LOCAL_SETTINGS = os.path.join(os.path.dirname(__file__), "local_settings") + ".py"
 if not os.path.exists(LOCAL_SETTINGS):
     msg = (
@@ -240,5 +253,6 @@ try:
     from local_settings import *
 except:
     pass
+
 
 HOST = "126.114.126.23:6660"

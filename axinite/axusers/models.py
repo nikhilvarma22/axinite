@@ -18,7 +18,8 @@ class UserProfile(models.Model):
     key = models.CharField(max_length=1024)
     key_expires = models.DateTimeField(default=\
                                        datetime.datetime.now() + \
-                                       timedelta(days=USER_KEY_EXPIRATION_DAYS)) 
+                                       timedelta(days=USER_KEY_EXPIRATION_DAYS))
+    profile_photo = models.CharField(max_length=1024)
 #-------------------------------------------------------------------------------    
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 #-------------------------------------------------------------------------------
