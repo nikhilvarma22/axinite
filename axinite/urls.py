@@ -27,5 +27,7 @@ urlpatterns = patterns('',
     url(r'^logout/', axlogout),
     url(r'^login_error/', login_error),
     url(r'', include('social_auth.urls')),
+    url(r'event/', include('event.urls')),
+    url(r'^admin/', include(admin.site.urls)),
     
 )

@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth import load_backend, login, logout
 from django.conf import settings
+from django.template import RequestContext
 
 #social auth
 from social_auth.backends.facebook import FacebookBackend
@@ -116,7 +117,9 @@ def register_user(data):
 def axlogin(request):
     login_form = LoginForm()
     return render_to_response('axusers/axlogin.html',
-                              {'login_form' : login_form})
+                              {'login_form' : login_form},
+                              context_instance = RequestContext(request)
+                              )
 
 #-------------------------------------------------------------------------------
 def axlogout(request):
@@ -311,7 +314,7 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
 #-------------------------------------------------------------------------------
 def get_user_friends(backend, details, response, social_user, uid, user, *args, 
                     **kwargs):
-    url = None
+    friends_url = None
     if backend.__class__ == FacebookBackend:
         friends_url = 'https://graph.facebook.com/%s/friends?access_token=%s' % \
         (response['id'], response['access_token'])

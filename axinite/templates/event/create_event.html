@@ -1,0 +1,32 @@
+<style type="text/css">
+	
+	{
+	    height: 52px;
+	    width: 221px;
+	    margin: 30px auto;
+	    padding: 91px 0 0 188px;
+	    background: url('../../content/web/datepicker/todo.png') transparent no-repeat 0 0;
+    }
+</style>
+
+<div id='event_panel'>
+	<form name="eventcreation" action="" method="post">
+	{% csrf_token %}
+	{{ eventform.non_field_errors }}
+	<p>
+		
+
+			{%for field in eventform %}
+				{{field.label}}			
+				{{field.errors}}
+				{{field}}
+			{% endfor %}
+
+				<label>&nbsp;</label>
+				<input type='hidden' name='formname' value='login'>
+				<input type="submit" class='k-button' value="Create Event" text="Create Event" />
+		
+	</p>
+
+</form>
+</div>

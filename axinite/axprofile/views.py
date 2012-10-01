@@ -1,6 +1,8 @@
 #django imports
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.template import  RequestContext
+from django.contrib.auth.models import User
 
 #axinite imports
 from axinite.axusers.models import *
@@ -8,6 +10,7 @@ from axinite.axusers.models import *
 @login_required()
 def axprofile(request):
     user = request.user
+<<<<<<< HEAD
     profile = UserProfile.objects.get(user=user.id)
     hometown = profile.hometown
     education_history = UserEducation.objects.filter(user=user).order_by('year')
@@ -31,6 +34,9 @@ def axprofile(request):
                           'location' : work.location,
                           })
     
+=======
+    profile = UserProfile.objects.get(user=user)
+>>>>>>> dac7375677b37f4d2bf7d5df294655fa4ed6612c
     friends = UserFriends.objects.filter(user=user).order_by('friend_name')
     list_friends = []
     for friend in friends:
@@ -55,6 +61,7 @@ def axprofile(request):
                               {'first_name' : user.first_name,
                                'last_name' : user.last_name,
                                'profile_photo' : profile.profile_photo,
+<<<<<<< HEAD
                                'friends' : list_friends,
                                'list_education' : list_education,
                                'list_work' : list_work,
@@ -64,3 +71,9 @@ def axprofile(request):
                                'political' : political
                                })
     
+=======
+                               'friends' : list_friends
+                               },
+                              context_instance = RequestContext(request)
+                              )
+>>>>>>> dac7375677b37f4d2bf7d5df294655fa4ed6612c
