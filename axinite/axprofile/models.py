@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -48,74 +46,62 @@ class City(models.Model):
         return self.name
 
 #-------------------------------------------------------------------------------
-
-class UserFriends(models.Model):
-    user = models.ForeignKey(User, unique=False)
-    friend_name = models.CharField(max_length=250)
-    friend_id = models.CharField(max_length=200)
-    social_site = models.CharField(max_length=200)
-    
-    def __unicode__(self):
-        return self.friend_name
-#-------------------------------------------------------------------------------
-
-class EmploymentHistory(models.Model):
-    """
-    This class describes the employment details of the employee.
-    
-    """
-    user = models.ForeignKey(User)
-    company_name = models.CharField(verbose_name ="Name",max_length=256)
-    date_of_joining = models.DateField()
-    date_of_leaving = models.DateField()
-    position = models.CharField(max_length =256,
-                                verbose_name="Designation",\
-                                null=True,blank=True,
-                                )
-    
-    def __unicode__(self):
-        employmenthistory_obj = "%s,%s" %(self.user,self.position)
-        return employmenthistory_obj
-    
-#-------------------------------------------------------------------------------
-
-class CourseType(models.Model):
-    name = models.CharField(max_length=1024)
-    
-    def __unicode__(self):
-        return self.name
-        
-#-------------------------------------------------------------------------------
-        
-class EducationHistory(models.Model):
-    """
-    This class describes the education details of the person/employee.
-    course type will tell whether the course is full time, part time etc,
-    branch will be specialization, qualification level will be whether 
-    the user is a graduate or 10+2 etc.
-    """
-    user = models.ForeignKey(User)
-    qualification_level = models.CharField(max_length=40,
-                                           null=True,blank=True,\
-                                           )
-    institute_name = models.CharField(max_length=1024,\
-                                      verbose_name="Institute Name",\
-                                      )
-    course_type = models.ForeignKey(CourseType,\
-                                    verbose_name = "Type of Institute"
-                                    )
-    branch = models.CharField(max_length=256,\
-                              verbose_name="Education Specialization",\
-                              null=True,blank=True
-                              )
-    year_of_passout = models.CharField(verbose_name = "Year of Passout",
-                                       max_length=10,
-                                       blank=True,null=True
-                                       )
-    
-    
-    def __unicode__(self):
-        return self.qualification_level
-    
-#-------------------------------------------------------------------------------
->>>>>>> dac7375677b37f4d2bf7d5df294655fa4ed6612c
+#class EmploymentHistory(models.Model):
+#    """
+#    This class describes the employment details of the employee.
+#    
+#    """
+#    user = models.ForeignKey(User)
+#    company_name = models.CharField(verbose_name ="Name",max_length=256)
+#    date_of_joining = models.DateField()
+#    date_of_leaving = models.DateField()
+#    position = models.CharField(max_length =256,
+#                                verbose_name="Designation",\
+#                                null=True,blank=True,
+#                                )
+#    
+#    def __unicode__(self):
+#        employmenthistory_obj = "%s,%s" %(self.user,self.position)
+#        return employmenthistory_obj
+#    
+##-------------------------------------------------------------------------------
+#
+#class CourseType(models.Model):
+#    name = models.CharField(max_length=1024)
+#    
+#    def __unicode__(self):
+#        return self.name
+#        
+##-------------------------------------------------------------------------------
+#        
+#class EducationHistory(models.Model):
+#    """
+#    This class describes the education details of the person/employee.
+#    course type will tell whether the course is full time, part time etc,
+#    branch will be specialization, qualification level will be whether 
+#    the user is a graduate or 10+2 etc.
+#    """
+#    user = models.ForeignKey(User)
+#    qualification_level = models.CharField(max_length=40,
+#                                           null=True,blank=True,\
+#                                           )
+#    institute_name = models.CharField(max_length=1024,\
+#                                      verbose_name="Institute Name",\
+#                                      )
+#    course_type = models.ForeignKey(CourseType,\
+#                                    verbose_name = "Type of Institute"
+#                                    )
+#    branch = models.CharField(max_length=256,\
+#                              verbose_name="Education Specialization",\
+#                              null=True,blank=True
+#                              )
+#    year_of_passout = models.CharField(verbose_name = "Year of Passout",
+#                                       max_length=10,
+#                                       blank=True,null=True
+#                                       )
+#    
+#    
+#    def __unicode__(self):
+#        return self.qualification_level
+#    
+##-------------------------------------------------------------------------------

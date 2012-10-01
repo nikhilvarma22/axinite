@@ -24,31 +24,24 @@ class UserProfile(models.Model):
                                        datetime.datetime.now() + \
                                        timedelta(days=USER_KEY_EXPIRATION_DAYS))
     profile_photo = models.CharField(max_length=1024)
-<<<<<<< HEAD
     gender = models.CharField(max_length=10)
     birthday = models.CharField(max_length=20)
     hometown = models.CharField(max_length=30)
-=======
-    gender = models.CharField(verbose_name="Gender",max_length=10,
-                              choices=GENDER_CHOICES
-                              )
     birthdate = models.DateField(null=True,blank=True)
     nationality = models.CharField(max_length=1024,null=True,blank=True)
     resident_city = models.ForeignKey(City,
-                                      verbose_name = "City",\
+                                      verbose_name = "City",
                                       null=True,blank=True,
                                       )
-    resident_state = models.ForeignKey(State,\
-                                       verbose_name="State",\
+    resident_state = models.ForeignKey(State,
+                                       verbose_name="State",
                                        null=True,blank=True
                                        )
-    resident_country = models.ForeignKey(Country,\
-                                         verbose_name="Country",\
+    resident_country = models.ForeignKey(Country,
+                                         verbose_name="Country",
                                          null=True,blank=True
                                         )
     is_public = models.BooleanField(default="True")
-    
->>>>>>> dac7375677b37f4d2bf7d5df294655fa4ed6612c
 #-------------------------------------------------------------------------------    
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 #-------------------------------------------------------------------------------
