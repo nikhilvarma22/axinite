@@ -29,28 +29,84 @@
 	#list_friends{
 		list-style-type: none;
 		position: relative;
-		top: 100px;
-		overflow:scroll;
+		top: 10px;
+		overflow:scroll;  
 		height: 500px;
 		width: 160px;
 	}
 	#list_friends>li{
 		margin-top:2px;
 	}
+	#profile_pic{
+		border: 5px solid #CCC;
+	}
+	.spacer{
+		height: 50px;
+	}
+	.list_info{
+		list-style-type: none;
+	}
 </style>
 
 <div id='container'>
 	<div id='left_content'>
-		<img height='200px' width='200px' src='{{profile_photo}}'/>
+		<img id='profile_pic' height='100px' width='100px' src='{{profile_photo}}'/>
 	</div>
 	
 	<div id='content'>
-		<center>Welcome to your profile {{first_name}} {{last_name}} </center>	
+		<center>Welcome {{first_name}} {{last_name}} </center>
+		<div class='spacer'></div>
+		Basic Info		
+		<hr />
+		Languages: {% for language in list_languages %} {{language}}&nbsp; {%endfor%}
+		<br>
+		Hometown : {{hometown}}
+		<br>
+		Religion: {{religion}}
+		<br>
+		Political Views : {{political}}
+		<div class='spacer'></div>
+		<div id='work_history'>
+			Work History
+			<hr />
+			{% for work in list_work%}
+				<ul class='list_info'>
+					<li><b>{{work.employer}}</b>
+						<ul class='list_info'>
+							<li>Position - {{work.position}}</li> 
+							<li>Start Date -  {{work.start_date}}</li> 
+							<li>Location -  {{work.location}}</li> 
+						</ul>					
+					</li>
+				</ul>
+				<br>
+			{% endfor %}
+		</div>
+		<div id='education_history'>
+			Education History
+			<hr />
+			{% for education in list_education%}
+				<ul class='list_info'>
+					<li><b>{{education.type}}</b>
+						<ul class='list_info'>
+							<li>Name - {{education.school}}</li>
+							{% if education.degree %} 
+								<li>Start Date -  {{education.degree}}</li>
+							{% endif %}
+							<li>year -  {{education.year}}</li> 
+						</ul>					
+					</li>
+				</ul>
+				<br>
+			{% endfor %}
+		</div>
+		<hr />
+			
 	</div>
 	
 	<div id='right_content'>
 		<a id="logout" href='/logout'>Logout</a>
-			<h3>Your Friends</h3>
+			<h3 style='float:right'>Your Friends</h3>
 			<ul id='list_friends'>
 			{% for friend in friends %}
 				<li>{{friend}}</li>

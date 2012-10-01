@@ -6,6 +6,7 @@ import json
 import urllib2 
 from urllib2 import urlopen
 from datetime import timedelta
+import sys, traceback
 
 #django imports
 from django.shortcuts import render_to_response
@@ -21,8 +22,7 @@ from social_auth.backends.twitter import TwitterBackend
 
 #axinite imports
 from axinite.axusers.forms.login_form import LoginForm
-from axinite.axusers.models import UserProfile
-from axinite.axprofile.models import UserFriends
+from axinite.axusers.models import *
 from axinite.settings import PROJECT_PATH
 #------------------------------------------------------------------------------
 def registration_confirmation(request):
@@ -126,6 +126,8 @@ def axlogout(request):
 def login_error(request):
     return HttpResponseRedirect('axusers/login_error.html')
 #-------------------------------------------------------------------------------
+#USER DATA FROM SOCIAL SITES
+#-------------------------------------------------------------------------------
 def get_user_avatar(backend, details, response, social_user, uid, user, *args, 
                     **kwargs):
     
@@ -148,6 +150,164 @@ def get_user_avatar(backend, details, response, social_user, uid, user, *args,
             avatar_file.write(avatar) 
         profile.profile_photo = filename 
         profile.save()
+#-------------------------------------------------------------------------------        
+def get_user_info(backend, details, response, social_user, uid, user, *args, 
+                    **kwargs):
+    url = None
+    if backend.__class__ == FacebookBackend:
+        userinfo_url = 'https://graph.facebook.com/%s?access_token=%s' % \
+        (response['id'], response['access_token'])
+    elif backend.__class__ == TwitterBackend:
+        pass
+ 
+    if userinfo_url:
+        try:
+            userinfo = json.loads(urlopen(userinfo_url).read())
+        except Exception as e:
+            userinfo = None
+        #-----------------------------------------------------------------------
+        #personal info
+        try:
+            user.first_name = userinfo['first_name']
+            user.first_name = userinfo['last_name']
+            print userinfo
+            
+            if 'gender' in userinfo:
+                gender = userinfo['gender']
+                if gender:
+                    try:
+                        profile = UserProfile.objects.get(user=user.id)
+                    except:
+                        profile = None
+                    if profile:
+                        profile.gender = gender
+                        profile.save()
+            if 'hometown' in userinfo:
+                hometown = userinfo['hometown']['name']
+                profile.hometown = hometown
+                profile.save()
+            user.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+        #-----------------------------------------------------------------------
+        #education history
+        try:
+            try:
+                UserEducation.objects.filter(user=user).delete()
+            except:
+                pass
+            list_education = userinfo['education']
+            if list_education:
+                for education in list_education:
+                    school = ""
+                    if 'school' in education:
+                        school = education['school']['name']
+                    type = ""
+                    if 'type' in education:
+                        type = education['type']
+                    degree = ""
+                    if 'degree' in education:
+                        degree = education['degree']['name']
+                    year = "" 
+                    if 'year' in education:
+                        year = education['year']['name']
+                    education = UserEducation(user=user, school=school, 
+                                              type=type, degree=degree, 
+                                              year=year)
+                    education.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+            pass
+        
+        #-----------------------------------------------------------------------
+        #work history
+        try:
+            try:
+                UserWorkHistory.objects.filter(user=user).delete()
+            except:
+                pass
+            list_work = userinfo['work']
+            if list_work:
+                for work in list_work:
+                    position = ""
+                    if 'position' in work:
+                        position = work['position']['name']
+                    employer = ""
+                    if 'employer' in work:
+                        employer = work['employer']['name']
+                    start_date = ""
+                    if 'start_date' in work:
+                        start_date = work['start_date']
+                    location = "" 
+                    if 'location' in work:
+                        location = work['location']['name']
+                    work = UserWorkHistory(user=user, position=position, 
+                                           employer=employer,
+                                           start_date=start_date, 
+                                           location=location)
+                    work.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+        #-----------------------------------------------------------------------
+        #languages 
+        try:
+            try:
+                UserLanguages.objects.filter(user=user).delete()
+            except:
+                pass
+            if 'languages' in userinfo:
+                list_languages = userinfo['languages']
+                if list_languages:
+                    for language in list_languages:
+                        language = UserLanguages(user=user, 
+                                                 language=language['name'])
+                        language.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+        #-----------------------------------------------------------------------
+        #political
+        try:
+            try:
+                UserPoliticalViews.objects.filter(user=user).delete()
+            except:
+                pass
+            if 'political' in userinfo:
+                political = userinfo['political']
+                political = UserPoliticalViews(user=user,description=political)
+                political.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
+        #-----------------------------------------------------------------------
+        #religion
+        try:
+            try:
+                UserReligiousViews.objects.filter(user=user).delete()
+            except:
+                pass
+            if 'religion' in userinfo:
+                religion = userinfo['religion']
+                religion = UserReligiousViews(user=user,name=religion, description="")
+                religion.save()
+        except Exception as e:
+            print "Exception in user code:"
+            print '-'*60
+            traceback.print_exc(file=sys.stdout)
+            print '-'*60
 #-------------------------------------------------------------------------------
 def get_user_friends(backend, details, response, social_user, uid, user, *args, 
                     **kwargs):
@@ -163,15 +323,9 @@ def get_user_friends(backend, details, response, social_user, uid, user, *args,
             UserFriends.objects.filter(id=id).delete()
         except:
             pass
-        import sys, traceback
         try:
             friends = json.loads(urlopen(friends_url).read())
         except Exception as e:
-            
-            print "Exception in user code:"
-            print '-'*60
-            traceback.print_exc(file=sys.stdout)
-            print '-'*60
             friends = None
         
         if friends:
