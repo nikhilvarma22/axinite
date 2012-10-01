@@ -27,6 +27,7 @@ class State(models.Model):
                             )
     country = models.ForeignKey(Country)
     
+    
     def __unicode__(self):
         return self.name
 #-------------------------------------------------------------------------------

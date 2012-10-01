@@ -58,6 +58,13 @@
 		<div class='spacer'></div>
 		Basic Info		
 		<hr />
+		About Me: {{aboutme}}
+
+		<hr />
+		Birthday: {{birthday}}
+		<br>
+		Location: {{location}}
+		<br>
 		Languages: {% for language in list_languages %} {{language}}&nbsp; {%endfor%}
 		<br>
 		Hometown : {{hometown}}
@@ -109,7 +116,7 @@
 			<h3 style='float:right'>Your Friends</h3>
 			<ul id='list_friends'>
 			{% for friend in friends %}
-				<li>{{friend}}</li>
+				<li><img src="{{friend.pic}}"><br>{{friend.name}}</li>
 				<hr>
 			{% endfor %}
 			</ul>

@@ -133,7 +133,6 @@ def login_error(request):
 #-------------------------------------------------------------------------------
 def get_user_avatar(backend, details, response, social_user, uid, user, *args, 
                     **kwargs):
-    
     url = None
     if backend.__class__ == FacebookBackend:
         url = "http://graph.facebook.com/%s/picture?type=large" % response['id']
@@ -142,10 +141,9 @@ def get_user_avatar(backend, details, response, social_user, uid, user, *args,
     if url:
         try:
             profile = UserProfile.objects.get(user=user.id)
-        except:
-            profile = None
-        if not profile:
+        except Exception as e:
             profile = UserProfile(user=user)
+            
         avatar = urlopen(url).read()
         filename = ('/media/profiles/profile%s.jpg' % (str(user.id)))
         filepath = PROJECT_PATH + filename
@@ -168,27 +166,46 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
             userinfo = json.loads(urlopen(userinfo_url).read())
         except Exception as e:
             userinfo = None
+        print userinfo
+        
         #-----------------------------------------------------------------------
         #personal info
         try:
             user.first_name = userinfo['first_name']
             user.first_name = userinfo['last_name']
-            print userinfo
+            try:
+                profile = UserProfile.objects.get(user=user.id)
+            except:
+                profile = UserProfile(user=user)
+
+            try:
+                profile.gender = userinfo['gender']
+            except: 
+                pass
+                
+            try:
+                profile.hometown = userinfo['hometown']['name']
+            except: 
+                pass
+                
+            try:
+                profile.aboutme = userinfo['bio']
+                
+            except: 
+                pass
+                
+            try:
+                profile.current_location = userinfo['location']['name']
+                
+            except: 
+                pass
             
-            if 'gender' in userinfo:
-                gender = userinfo['gender']
-                if gender:
-                    try:
-                        profile = UserProfile.objects.get(user=user.id)
-                    except:
-                        profile = None
-                    if profile:
-                        profile.gender = gender
-                        profile.save()
-            if 'hometown' in userinfo:
-                hometown = userinfo['hometown']['name']
-                profile.hometown = hometown
-                profile.save()
+            try:
+                profile.birthday = userinfo['birthday']
+            except: 
+                pass
+            
+            profile.save()
             user.save()
         except Exception as e:
             print "Exception in user code:"
@@ -206,17 +223,29 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
             if list_education:
                 for education in list_education:
                     school = ""
-                    if 'school' in education:
+                    try:
                         school = education['school']['name']
+                    except: 
+                        pass    
                     type = ""
-                    if 'type' in education:
+                    
+                    try:
                         type = education['type']
+                    except: 
+                        pass    
+
                     degree = ""
-                    if 'degree' in education:
+                    try:
                         degree = education['degree']['name']
+                    except: 
+                        pass    
+
                     year = "" 
-                    if 'year' in education:
+                    try:
                         year = education['year']['name']
+                    except: 
+                        pass    
+                        
                     education = UserEducation(user=user, school=school, 
                                               type=type, degree=degree, 
                                               year=year)
@@ -239,17 +268,29 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
             if list_work:
                 for work in list_work:
                     position = ""
-                    if 'position' in work:
+                    try:
                         position = work['position']['name']
+                    except:
+                        pass
+                    
                     employer = ""
-                    if 'employer' in work:
+                    try:
                         employer = work['employer']['name']
+                    except:
+                        pass
+
                     start_date = ""
-                    if 'start_date' in work:
+                    try:
                         start_date = work['start_date']
+                    except:
+                        pass
+
                     location = "" 
-                    if 'location' in work:
+                    try:
                         location = work['location']['name']
+                    except:
+                        pass
+
                     work = UserWorkHistory(user=user, position=position, 
                                            employer=employer,
                                            start_date=start_date, 
@@ -267,13 +308,16 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
                 UserLanguages.objects.filter(user=user).delete()
             except:
                 pass
-            if 'languages' in userinfo:
+            try:
                 list_languages = userinfo['languages']
                 if list_languages:
                     for language in list_languages:
                         language = UserLanguages(user=user, 
                                                  language=language['name'])
                         language.save()
+            except:
+                pass
+
         except Exception as e:
             print "Exception in user code:"
             print '-'*60
@@ -282,41 +326,35 @@ def get_user_info(backend, details, response, social_user, uid, user, *args,
         #-----------------------------------------------------------------------
         #political
         try:
-            try:
-                UserPoliticalViews.objects.filter(user=user).delete()
-            except:
-                pass
-            if 'political' in userinfo:
-                political = userinfo['political']
-                political = UserPoliticalViews(user=user,description=political)
-                political.save()
-        except Exception as e:
-            print "Exception in user code:"
-            print '-'*60
-            traceback.print_exc(file=sys.stdout)
-            print '-'*60
+            UserPoliticalViews.objects.filter(user=user).delete()
+        except:
+            pass
+        
+        try:
+            political = userinfo['political']
+            political = UserPoliticalViews(user=user,description=political)
+            political.save()
+        except:
+            pass
+
         #-----------------------------------------------------------------------
         #religion
         try:
-            try:
-                UserReligiousViews.objects.filter(user=user).delete()
-            except:
-                pass
-            if 'religion' in userinfo:
-                religion = userinfo['religion']
-                religion = UserReligiousViews(user=user,name=religion, description="")
-                religion.save()
-        except Exception as e:
-            print "Exception in user code:"
-            print '-'*60
-            traceback.print_exc(file=sys.stdout)
-            print '-'*60
+            UserReligiousViews.objects.filter(user=user).delete()
+        except:
+            pass
+        try:
+            religion = userinfo['religion']
+            religion = UserReligiousViews(user=user,name=religion, description="")
+            religion.save()
+        except:
+            pass
 #-------------------------------------------------------------------------------
 def get_user_friends(backend, details, response, social_user, uid, user, *args, 
                     **kwargs):
     friends_url = None
     if backend.__class__ == FacebookBackend:
-        friends_url = 'https://graph.facebook.com/%s/friends?access_token=%s' % \
+        friends_url = 'https://graph.facebook.com/%s/friends?access_token=%s&fields=name,id,picture' % \
         (response['id'], response['access_token'])
     elif backend.__class__ == TwitterBackend:
         pass
@@ -339,9 +377,14 @@ def get_user_friends(backend, details, response, social_user, uid, user, *args,
                 except:
                     pass
                 for friend in friends:
+                    try:
+                        pic = friend['picture']['data']['url']
+                    except:
+                        pic = ""
                     new_friend = UserFriends(user=user, 
                                              friend_name=friend['name'],
                                              friend_id=friend['id'],
+                                             pic=pic,
                                              social_site=\
                                              backend.__class__.__name__)
                     new_friend.save()

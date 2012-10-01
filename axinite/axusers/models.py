@@ -29,18 +29,7 @@ class UserProfile(models.Model):
     hometown = models.CharField(max_length=30)
     birthdate = models.DateField(null=True,blank=True)
     nationality = models.CharField(max_length=1024,null=True,blank=True)
-    resident_city = models.ForeignKey(City,
-                                      verbose_name = "City",
-                                      null=True,blank=True,
-                                      )
-    resident_state = models.ForeignKey(State,
-                                       verbose_name="State",
-                                       null=True,blank=True
-                                       )
-    resident_country = models.ForeignKey(Country,
-                                         verbose_name="Country",
-                                         null=True,blank=True
-                                        )
+    current_location = models.CharField(max_length=30)
     is_public = models.BooleanField(default="True")
 #-------------------------------------------------------------------------------    
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
@@ -75,6 +64,7 @@ class UserLanguages(models.Model):
 #-------------------------------------------------------------------------------
 class UserFriends(models.Model):
     user = models.ForeignKey(User, unique=False)
+    pic = models.CharField(max_length=1024)
     friend_name = models.CharField(max_length=250)
     friend_id = models.CharField(max_length=200)
     social_site = models.CharField(max_length=200)

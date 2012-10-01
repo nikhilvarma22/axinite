@@ -11,7 +11,6 @@ from axinite.axusers.models import *
 def axprofile(request):
     user = request.user
     profile = UserProfile.objects.get(user=user.id)
-    hometown = profile.hometown
     education_history = UserEducation.objects.filter(user=user).order_by('year')
     list_education = []
     for education in education_history:
@@ -36,7 +35,8 @@ def axprofile(request):
     friends = UserFriends.objects.filter(user=user).order_by('friend_name')
     list_friends = []
     for friend in friends:
-        list_friends.append(friend.friend_name)
+        list_friends.append({'name': friend.friend_name,
+                             'pic' : friend.pic})
     
     languages = UserLanguages.objects.filter(user=user).order_by('language')
     list_languages = []
@@ -61,9 +61,12 @@ def axprofile(request):
                                'list_education' : list_education,
                                'list_work' : list_work,
                                'list_languages' : list_languages,
-                               'hometown' : hometown,
+                               'hometown' : profile.hometown,
+                               'birthday' : profile.birthday,
+                               'location' : profile.current_location,
                                'religion' : religion,
-                               'political' : political
+                               'political' : political,
+                               'aboutme' : profile.aboutme
                                },
                               context_instance = RequestContext(request)
                               )
