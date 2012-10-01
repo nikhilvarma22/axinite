@@ -5,17 +5,14 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
 #-------------------------------------------------------------------------------
+#axinite imports
+from axinite.utilities.model_choices import GENDER_CHOICES
+
+
 class RegistrationForm(forms.Form):
     """
     Primary SignUp Form for user
     """
-    
-    
-    GENDER_CHOICES = (
-        ('select_sex', 'Select Sex'),
-        ('male', 'Male'),
-        ('female', 'Female'),
-    )
 
     username = forms.CharField(label="Username/Email:",max_length=80,\
                                  initial='Username',\
