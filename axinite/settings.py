@@ -140,6 +140,10 @@ INSTALLED_APPS = (
     'social_auth',
     'axprofile',
     "event",
+    'group',
+    'djangobb_forum',
+    'jobs_classifieds',
+    
 )
 
 # A sample logging configuration. The only tangible logging

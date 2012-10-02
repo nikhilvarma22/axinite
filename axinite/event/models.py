@@ -78,9 +78,11 @@ class Subscriber(models.Model):
     subscribed = At what day and time it was subscribed
     """
     event = models.ForeignKey(Event,null=True,blank=True)
-    subscribers = models.ManyToManyField(User, related_name='subscriptions',\
+    subscribers = models.ManyToManyField(User,\
                                          verbose_name='Subscribers',\
-                                         null=True, blank=True
+                                         null=True, blank=True,
+                                         db_column = "Subscribers",
+                                         related_name = "event_subscriber_subscribers"
                                          )
     subscribed = models.DateTimeField(null=True,blank=True)
     
