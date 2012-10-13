@@ -1,6 +1,6 @@
 from django.contrib import admin
 from axinite.event.models import Event, Share, Comment, ReportAbuse, \
-Participant, Organizer, Subscriber, SpamComment
+Participant, Subscriber, SpamComment
 
 
 class ShareAdmin(admin.ModelAdmin):
@@ -17,11 +17,6 @@ admin.site.register(Event,EventAdmin)
 
 class ParticipantAdmin(admin.ModelAdmin):
     list_display = ("id",'event',)
-    
-class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ("id",'event',)
-
-admin.site.register(Organizer,OrganizerAdmin)
     
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ("id",'event',)

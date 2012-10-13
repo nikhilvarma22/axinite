@@ -1,0 +1,78 @@
+{%extends 'base/skeleton.html'%}
+{% block header %}
+<br>
+<center><H2>Welcome to Axinite</H2></center>
+{% endblock header %}
+	
+{% block content%}
+
+<div id='container'>
+	
+	<div id='content'>
+		<center><h2>{{first_name}} {{last_name}} </h2></center>
+		<div class='spacer'></div>
+		<form>
+                    <div style="float: left; width: 50%;">
+                        <div class="field">
+                            <label>Nationality</label>
+                            {{form.nationality}}
+                        </div>
+                        <div class="field">
+                            <label>Current Location</label>
+                            {{form.location}}
+                        </div>
+                        <div>
+                            <fieldset>
+                                <legend>Employment History</legend>
+                                <div class="field">
+                                    {{form.company_name}}
+				    {{form.designation}}
+				    {{form.date_of_joining}}
+				    {{form.date_of_leaving}}
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset>
+                                <legend>Education History</legend>
+                                <div class="field">
+                                    {{form.qualification_level}}
+				    {{form.university}}
+				    {{form.branch}}
+				    {{form.year_of_passout}}
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset>
+                                <legend>Interests</legend>
+                                <div class="field">
+                                    {{form.interest}}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div style="float: left; width: 50%;">
+                        <div>
+                            <fieldset>
+                                <legend>Political View</legend>
+                                <div class="field">
+                                    <input type="radio" value="Liberal"> Liberal
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div>
+                            <fieldset>
+                                <legend>Economic View</legend>
+                                <div class="field">
+                                    <input type="radio" value="Capitalism"> Capitalism
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div style="clear: both;"></div>
+                </form>
+	</div>
+</div>
+
+{% endblock content%}
