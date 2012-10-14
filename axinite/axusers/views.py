@@ -25,6 +25,7 @@ from social_auth.backends.twitter import TwitterBackend
 from axinite.axusers.forms.login_form import LoginForm
 from axinite.axusers.models import *
 from axinite.settings import PROJECT_PATH
+from axinite.axusers.forms.additionalsignup_form import AdditionalSignUpform
 #------------------------------------------------------------------------------
 def registration_confirmation(request):
     try:
@@ -51,9 +52,7 @@ def verify_registration(request):
     reason = 'Invalid Key'
     try:
         key = request.GET.get('key')
-        print key
         username = request.GET.get('username')
-        print username
         user = User.objects.get(username=username)
         user_key = user.profile.key
         key_validity = int(user.profile.key_expires.strftime('%f'))
@@ -68,10 +67,9 @@ def verify_registration(request):
             reason = 'Key Expired'
         verified = True
     except Exception as e:
-        print e.__str__()
         verified = False
     if not verified:
-        return HttpResponseRedirect('axusers/verification_error?reason=%s' % reason)
+        return HttpResponseRedirect('/axusers/verification_error?reason=%s' % reason)
     else:
         user.is_locked = False
         user.save()
@@ -79,7 +77,7 @@ def verify_registration(request):
         user.profile.save()
         login_user(request, user)
         user.save()
-        return HttpResponseRedirect('axusers/registration/')
+        return HttpResponseRedirect('/axusers/registration/')
 #------------------------------------------------------------------------------
 def login_user(request, user):
     """
@@ -425,7 +423,7 @@ def complete_registration(request):
             print "Form is invalid"
     else:
         form = AdditionalSignUpform()
-    return render_to_response("axusers/profile2.html",
+    return render_to_response("axprofile/profile2.html",
                             {'form':form},
                             context_instance=RequestContext(request)
                             )

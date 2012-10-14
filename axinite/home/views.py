@@ -41,7 +41,7 @@ def home(request):
                      Regards,
                      Axinite Team
                      
-                    """ % (user.first_name, HOST, user.profile.key, 
+                    """ % (user.first_name, BASE_URL, user.profile.key, 
                            user.username)
                     email = EmailMessage(subject, message, to=[address])
                     email.send()

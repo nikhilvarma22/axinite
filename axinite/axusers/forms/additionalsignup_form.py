@@ -28,8 +28,8 @@ class AdditionalSignUpform(forms.Form):
                                     label="Position",max_length=120,\
                                     required=False
                                 )
-    date_of_joining = forms.DateField(label="From",null=True,blank=True)
-    date_of_leaving = forms.DateField(label="To",null=True,blank=True)
+    date_of_joining = forms.DateField(label="From",required=True)
+    date_of_leaving = forms.DateField(label="To",required=True)
     # Education History
     qualification_level = forms.CharField(
                                         label="Qualification Level",max_length=256,\
