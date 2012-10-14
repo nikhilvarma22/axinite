@@ -1,26 +1,13 @@
 {% extends 'base/skeleton.html' %}
 
 {% block content %}
-	<script >
- 		$(document).ready(function() {
-                // create DatePicker from input HTML element
-                $(".form_date").kendoDatePicker();
-                $("#id_gender").kendoDropDownList();
-        });
-	</script>
-	<style>
-		#left_content, #right_content{
-			width: 50%;
-			float:left;
-		}
-		#right_content{
-
-		}
-	</style>
-	<div id='left_content'>
-		<img src='http://2.bp.blogspot.com/-Eo8FKMyeR_A/UCDu0YUQSYI/AAAAAAAAC_4/ZU5l7KXf5jo/s1600/10+most+popular+Social+networking+sites.jpg' />
-	</div>
-	<div id='right_content'>
-		{% include 'home/right_content.html'%}
+	<div class="hero-unit">
+		<div id='left_content'>
+			<img src='http://2.bp.blogspot.com/-Eo8FKMyeR_A/UCDu0YUQSYI/AAAAAAAAC_4/ZU5l7KXf5jo/s1600/10+most+popular+Social+networking+sites.jpg' />
+		</div>
+		<div id='right_content'>
+			{% include 'home/right_content.html'%}
+		</div>
+		<div class="clear"></div>
 	</div>
 {% endblock content %}

@@ -51,11 +51,13 @@ def verify_registration(request):
     reason = 'Invalid Key'
     try:
         key = request.GET.get('key')
+        print key
         username = request.GET.get('username')
+        print username
         user = User.objects.get(username=username)
         user_key = user.profile.key
-        key_validity = int(user.profile.key_expires.strftime('%s'))
-        now = int(datetime.datetime.now().strftime('%s'))
+        key_validity = int(user.profile.key_expires.strftime('%f'))
+        now = int(datetime.datetime.now().strftime('%f'))
         if not user.profile.key == key:
             verified = False
             reason = 'Unknown Key'

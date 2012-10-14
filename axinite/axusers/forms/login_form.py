@@ -10,16 +10,18 @@ class LoginForm(forms.Form):
     """
     Login form for users
     """
+    
     username = forms.CharField(label="Username:",max_length=80,\
                                  required=True,
                                  widget=forms.TextInput(attrs=\
-                                                           {'class':'k-textbox'})
+                                                           {'class':'span2','placeholder':'Username'})
                                  )
     password = forms.CharField(label="Password:",\
-                                widget=forms.PasswordInput(attrs={'class':
-                                                                  'k-textbox'}),\
+                                widget=forms.PasswordInput(attrs=\
+                                                           {'class':'span2','placeholder':'Password'}),\
                                 required=True,
                                 )
+    
     #---------------------------------------------------------------------------
     def clean_username(self):
         """

@@ -1,28 +1,12 @@
-<div id='registration_form_container' class='k-block k-shadow'>
-	<form name="/registration" action="" method="post">
+<div id='registration_form_container'>
+	<form name="/registration" action="" method="post" class="form-horizontal">
 		{% csrf_token %}
-		{{ form_registration.non_field_errors }}
-		<table>
-			{%for field in form_registration %}
-			<tr>
-				<td>
-					{{field.label}}			
-				</td>
-				<td>
-					{{field}}
-					{{field.errors}}
-				</td>
-				<td>
-					
-				</td>
-			</tr>
-			{% endfor %}
-			<tr>
-				<td colspan=2>
-					<input type='hidden' name='formname' value='registration'>
-					<input type="submit" class='k-button' value="Sign Up" text="Sign Up" />
-				</td>
-			</tr>
-		</table>
+		{{form_registration.as_p}}
+		<div class="control-group">
+			<div class="controls">
+				<input type='hidden' name='formname' value='registration'>
+				<input type="submit" class='btn btn-primary btn-large' value="Sign Up &raquo;" text="Sign Up" />
+			</div>
+		</div>
 	</form>
 </div>

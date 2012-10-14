@@ -1,60 +1,39 @@
-<style>
-	#logo_panel, #login_panel{
-		width: 50%;
-		float:left;
-	}
-	#login_panel *{
-		height: 25px;
-		width: 150px;
-		font-size: .98em !important;
-	}
-	.sconnect{
-		width: 18px !important;
-		height: 18px !important;
-	}
-</style>
-<div id='logo_panel'>
-	AxInItE
-</div>
-<div id='login_panel'>
-	<form name="login" action="" method="post">
-	{% csrf_token %}
-	{{ form_login.non_field_errors }}
-	<table>
-		
-		<tr>
-			{%for field in form_login %}
-			<td>
-				{{field.label}}			
-				{{field.errors}}
-				{{field}}
-			</td>
-			{% endfor %}
-			<td>
-				<label>&nbsp;</label>
-				<input type='hidden' name='formname' value='login'>
-				<input type="submit" class='k-button' value="Login" text="Login" />
-			</td>
-		</tr>
-		<tr>
-			<td>Login with:</td>
-			<td>
-				<a href='/axlogin'>
-					<img class='sconnect' src='/static/images/facebook.png'/>
-				</a>
-			</td>
-			<td>
-				<a href='/axlogin'>
-					<img class='sconnect' src='/static/images/twitter.png'/>
-				</a>
-			</td>
-			<td>
-				<a href='/axlogin'>
-					<img class='sconnect' src='/static/images/google+_02_32x32.png'/>
-				</a>
-			</td>
-			<td></td>
-		</tr>
-	</table>
-</form>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+	  <div class="container">
+	    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </a>
+	    <a class="brand" href="#">Axinite</a>
+	    <div class="nav-collapse collapse">
+	      <ul class="nav">
+		<li class="active"><a href="#">Home</a></li>
+		<li><a href="#about">About</a></li>
+		<li><a href="#contact">Contact</a></li>
+	      </ul>
+	{{user}}
+	      {% if not user.is_authenticated %}
+	      <form name="login" action="" method="post" class="navbar-form pull-right">
+		{% csrf_token %}
+		{%for field in form_login %}
+			{{field}}
+		{% endfor %}
+		<input type='hidden' name='formname' value='login'>
+		<button type="submit" class="btn">Sign in</button>
+		<a href='/axlogin'>
+			<img class='sconnect' src='/media/images/facebook.png'/>
+		</a>
+		<a href='/axlogin'>
+			<img class='sconnect' src='/media/images/twitter.png'/>
+		</a>
+		<a href='/axlogin'>
+			<img class='sconnect' src='/media/images/google+_02_32x32.png'/>
+		</a>
+	      </form>
+	      {% endif %}
+	    </div><!--/.nav-collapse -->
+	  </div>
+	</div>
 </div>
