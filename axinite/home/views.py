@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 
 #axinite imports
-from axinite.settings import BASE_URL
+from axinite.settings import BASE_URL, HOST
 from axinite.axusers.views import register_user
 from axinite.axusers.forms.registration_form import RegistrationForm
 from axinite.axusers.forms.login_form import LoginForm
@@ -26,27 +26,27 @@ def home(request):
                 user = register_user(userdata)
                 if user:
                     address = user.email
-                    redirect_to = '/registration_confirmation?email=%s' % \
+                    redirect_to = 'axusers/registration_confirmation?email=%s' % \
                     address
                     
-                    subject=''
+                    subject='[Axinite]'
                     message = """Hi %s,
                     
                      You have successfully registered with Axinite.
     
                      Please follow the link below to complete your registration:
                         
-                     http://%s/verify_registration/?key=%s&username=%s
+                     http://%s/axusers/verify_registration/?key=%s&username=%s
                                         
                      Regards,
                      Axinite Team
                      
-                    """ % (user.first_name, BASE_URL, user.profile.key, 
+                    """ % (user.first_name, HOST, user.profile.key, 
                            user.username)
                     email = EmailMessage(subject, message, to=[address])
                     email.send()
                 else:
-                    redirect_to = '/registration_failure'
+                    redirect_to = 'axusers/registration_failure'
                 return HttpResponseRedirect(redirect_to)
         if request.POST['formname'] == 'login':
             form_login = LoginForm(request.POST)
@@ -56,7 +56,7 @@ def home(request):
                 user = authenticate(username=data['username'], 
                                     password=data['password'])
                 login(request, user)
-                return HttpResponseRedirect('/axprofile')
+                return HttpResponseRedirect('axprofile/axprofile')
     else:
         form_registration = RegistrationForm()
         form_login = LoginForm()

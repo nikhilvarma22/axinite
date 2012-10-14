@@ -13,6 +13,18 @@ from axinite.utilities.model_choices import GENDER_CHOICES
 from axinite.axprofile.models import City, State, Country
 #-------------------------------------------------------------------------------
 
+class Interest(models.Model):
+    """
+    This class will describes the interst of the user.
+    We can select many interst at once that's why we\
+    are making into ManyToManyField.
+    """
+    name = models.CharField(max_length=646,null=True,blank=True)
+    
+    def __unicode__(self):
+        return self.name
+    
+#-------------------------------------------------------------------------------        
 class UserProfile(models.Model):
     """
     This class extends the django user to create profiles for users
@@ -31,6 +43,7 @@ class UserProfile(models.Model):
     nationality = models.CharField(max_length=1024,null=True,blank=True)
     current_location = models.CharField(max_length=30)
     is_public = models.BooleanField(default="True")
+    interest = models.ManyToManyField(Interest,null=True,blank=True)
 #-------------------------------------------------------------------------------    
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 #-------------------------------------------------------------------------------
@@ -69,6 +82,8 @@ class UserFriends(models.Model):
     friend_id = models.CharField(max_length=200)
     social_site = models.CharField(max_length=200)
 #-------------------------------------------------------------------------------
+
+
 #increase email field length
 def email_field_init(self, *args, **kwargs):
   kwargs['max_length'] = kwargs.get('max_length', 200)

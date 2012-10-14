@@ -71,7 +71,7 @@ def verify_registration(request):
         print e.__str__()
         verified = False
     if not verified:
-        return HttpResponseRedirect('/verification_error?reason=%s' % reason)
+        return HttpResponseRedirect('axusers/verification_error?reason=%s' % reason)
     else:
         user.is_locked = False
         user.save()
@@ -79,7 +79,7 @@ def verify_registration(request):
         user.profile.save()
         login_user(request, user)
         user.save()
-        return HttpResponseRedirect('/axprofile')
+        return HttpResponseRedirect('axusers/registration/')
 #------------------------------------------------------------------------------
 def login_user(request, user):
     """
@@ -393,7 +393,44 @@ def get_user_friends(backend, details, response, social_user, uid, user, *args,
                 
     return False
 #-------------------------------------------------------------------------------
+def complete_registration(request):
+    """
+    this function takes the addional signup details from user
+    and save into the database.
+    """
+    if request.method == "POST":
+        form = AdditionalSignUpform(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            nationality = cd['nationality']
+            location = cd['location']
             
+            company_name = cd['company_name']
+            designation = cd['designation']
+            date_of_joining = cd['date_of_joining']
+            date_of_leaving = cd['date_of_leaving']
+            # Education History
+            degree = cd['qualification_level']
+            school = cd['university']
+            branch = cd['branch']
+            year_of_passout = cd['year_of_passout']
+            
+            
+            
+            for interests in cd['interest']:
+                userprofile_obj.interest.add(interests.id)
+            return HttpResponseRedirect('axusers/axprofile')
+                
+        else:
+            print "Form is invalid"
+    else:
+        form = AdditionalSignUpform()
+    return render_to_response("axusers/profile2.html",
+                            {'form':form},
+                            context_instance=RequestContext(request)
+                            )
+    
+    
             
         
         
