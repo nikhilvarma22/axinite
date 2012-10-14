@@ -1,0 +1,22 @@
+*{
+        margin: 0px;
+        padding: 0px;
+}
+#container, #header, #footer{
+        width: 1000px !important;
+        margin: 0 auto;
+}
+#header{
+        height: 80px;
+        background: #E7E5E6;
+        margin-bottom:10px;
+}
+#content{
+        height: 600px;
+        margin-top: 10px;
+}
+#footer{
+        margin-top:10px;
+        height: 20px;
+        background: #E7E5E6;
+}
