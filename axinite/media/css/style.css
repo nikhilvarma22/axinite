@@ -17,3 +17,5 @@ body {
 #left_content, #right_content{float: left; width: 50%;}
 
 form.form-horizontal label{display: inline-block; width: 175px;}
+
+.field{margin-bottom: 5px;}

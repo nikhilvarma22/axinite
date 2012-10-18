@@ -1,5 +1,25 @@
 {%extends 'base/skeleton.html'%}
-	
+
+{% block html_js %}
+	<script src="/static/js/handlebars.js"></script>
+	<script id="entry-template" type="text/x-handlebars-template">
+		<div class="entry">
+			<h1>{{title}}</h1>
+			<div class="body">
+				{{body}}
+			</div>
+		</div>
+      </script>
+      <script>
+		var source   = $("#entry-template").html();
+		var template = Handlebars.compile(source);
+		var context = {title: "My New Post", body: "This is my first post!"};
+		var html    = template(context);
+		console.log(html);
+		$("#test").html(html);
+      </script>
+{% endblock html_js %}
+
 {% block content%}
 
 <div id='container'>
@@ -7,8 +27,8 @@
 	<div id='content'>
 		<center><h2>{{first_name}} {{last_name}} </h2></center>
 		<div class='spacer'></div>
-		<form>
-                    <div style="float: left; width: 50%;">
+		<form class="form-horizontal">
+                    <div style="float: left; width: 48%; padding: 1%;">
                         <div class="field">
                             <label>Nationality</label>
                             {{form.nationality}}
@@ -21,22 +41,52 @@
                             <fieldset>
                                 <legend>Employment History</legend>
                                 <div class="field">
+					<label style="width: 165px;">Company Name</label>
+					<label style="width: 165px;">Position</label>
+					<label style="width: 102px;">Joining Date</label>
+					<label style="width: 102px;">Leaving Date</label>
+				</div>
+				<div class="field">
                                     {{form.company_name}}
 				    {{form.designation}}
 				    {{form.date_of_joining}}
 				    {{form.date_of_leaving}}
                                 </div>
+				<div class="field">
+                                    {{form.company_name}}
+				    {{form.designation}}
+				    {{form.date_of_joining}}
+				    {{form.date_of_leaving}}
+                                </div>
+				<div style="text-align: right;">
+					<a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> Add More</a>
+				</div>
                             </fieldset>
                         </div>
                         <div>
                             <fieldset>
                                 <legend>Education History</legend>
+				<div class="field">
+					<label style="width: 165px;">Qualification</label>
+					<label style="width: 165px;">University</label>
+					<label style="width: 102px;">Branch Date</label>
+					<label style="width: 102px;">Year of Passout</label>
+				</div>
                                 <div class="field">
                                     {{form.qualification_level}}
 				    {{form.university}}
 				    {{form.branch}}
 				    {{form.year_of_passout}}
                                 </div>
+				<div class="field">
+                                    {{form.qualification_level}}
+				    {{form.university}}
+				    {{form.branch}}
+				    {{form.year_of_passout}}
+                                </div>
+				<div style="text-align: right;">
+					<a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> Add More</a>
+				</div>
                             </fieldset>
                         </div>
                         <div>
@@ -48,7 +98,7 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div style="float: left; width: 50%;">
+                    <div style="float: left; width: 48%; padding: 1%;">
                         <div>
                             <fieldset>
                                 <legend>Political View</legend>
@@ -67,8 +117,11 @@
                         </div>
                     </div>
                     <div style="clear: both;"></div>
+		    <div>
+			<input type="submit" class='btn btn-primary btn-large' value="Save &raquo;" text="Save" />
+		    </div>
                 </form>
 	</div>
 </div>
-
+<div id="test"></div>
 {% endblock content%}

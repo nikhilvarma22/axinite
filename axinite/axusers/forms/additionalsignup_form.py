@@ -22,22 +22,28 @@ class AdditionalSignUpform(forms.Form):
     #Employment History
     company_name = forms.CharField(
                                     label="Company Name",max_length=256,\
-                                    required=False
+                                    required=False,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-medium'})
                                 )
     designation = forms.CharField(
                                     label="Position",max_length=120,\
-                                    required=False
+                                    required=False,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-medium'})
                                 )
-    date_of_joining = forms.DateField(label="From",required=True)
-    date_of_leaving = forms.DateField(label="To",required=True)
+    date_of_joining = forms.DateField(label="From",required=True,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-small'}))
+    date_of_leaving = forms.DateField(label="To",required=True,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-small'}))
     # Education History
     qualification_level = forms.CharField(
                                         label="Qualification Level",max_length=256,\
-                                        required=False
+                                        required=False,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-medium'})
                                         )
     university = forms.CharField(
                                     label="University",max_length=256,\
-                                    required=False
+                                    required=False,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-medium'})
                                 )
     #course_type = forms.ModelChoiceField(
     #                                    queryset=CourseType.objects.all(),
@@ -45,11 +51,13 @@ class AdditionalSignUpform(forms.Form):
     #                                    )
     branch = forms.CharField(
                                     label="Branch",max_length=256,\
-                                    required=False
+                                    required=False,widget=forms.TextInput(attrs=\
+                                                           {'class':'input-small'})
                                 )
     year_of_passout = forms.CharField(
                                     max_length=10,required=False,\
-                                    label="Year"
+                                    label="Year",widget=forms.TextInput(attrs=\
+                                                           {'class':'input-small'})
                                     )
     
     #Interest
