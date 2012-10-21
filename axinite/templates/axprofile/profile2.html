@@ -2,22 +2,56 @@
 
 {% block html_js %}
 	<script src="/static/js/handlebars.js"></script>
-	<script id="entry-template" type="text/x-handlebars-template">
-		<div class="entry">
-			<h1>{{title}}</h1>
-			<div class="body">
-				{{body}}
-			</div>
+	<script id="employment_section" type="text/x-handlebars-template">
+		<div class="field">
+			<input type="text" maxlength="256" name="company_name[]" class="input-medium" id="id_company_name" value="{% templatetag openvariable %}company_name{% templatetag closevariable %}">
+			<input type="text" maxlength="120" name="designation[]" class="input-medium" id="id_designation" value="{% templatetag openvariable %}designation{% templatetag closevariable %}">
+			<input type="text" name="date_of_joining[]" class="input-small" id="id_date_of_joining" value="{% templatetag openvariable %}date_of_joining{% templatetag closevariable %}">
+			<input type="text" name="date_of_leaving[]" class="input-small" id="id_date_of_leaving" value="{% templatetag openvariable %}date_of_leaving{% templatetag closevariable %}">
+			<a href="javascript:void(0)" class="delete_employment_link"><img src="/static/images/delete_icon.png"/></a>
 		</div>
-      </script>
-      <script>
-		var source   = $("#entry-template").html();
-		var template = Handlebars.compile(source);
-		var context = {title: "My New Post", body: "This is my first post!"};
-		var html    = template(context);
-		console.log(html);
-		$("#test").html(html);
-      </script>
+	</script>
+	<script>
+		var employment_section_source   = $("#employment_section").html();
+		var employment_section_template = Handlebars.compile(employment_section_source);
+		function add_employment_section(employment_section_data = {})
+		{
+			var employment_section_html = employment_section_template(employment_section_data);
+			$("#employment_section_div").append(employment_section_html);
+		}
+		$(".add_employment_link").click(function(){
+			add_employment_section()
+		});
+		$('#employment_section_div').on('click', 'a.delete_employment_link', function(e) {
+			$(this).parent().remove();
+		});
+		add_employment_section();
+	</script>
+	<script id="education_section" type="text/x-handlebars-template">
+		<div class="field">
+			<input type="text" maxlength="256" name="qualification_level[]" class="input-medium" id="id_qualification_level" value="{% templatetag openvariable %}qualification_level{% templatetag closevariable %}">
+			<input type="text" maxlength="256" name="university[]" class="input-medium" id="id_university" value="{% templatetag openvariable %}university{% templatetag closevariable %}">
+			<input type="text" maxlength="256" name="branch[]" class="input-small" id="id_branch" value="{% templatetag openvariable %}branch{% templatetag closevariable %}">
+			<input type="text" maxlength="10" name="year_of_passout[]" class="input-small" id="id_year_of_passout" value="{% templatetag openvariable %}year_of_passout{% templatetag closevariable %}">
+			<a href="javascript:void(0)" class="delete_education_link"><img src="/static/images/delete_icon.png"/></a>
+		</div>
+	</script>
+	<script>
+		var education_section_source   = $("#education_section").html();
+		var education_section_template = Handlebars.compile(education_section_source);
+		function add_education_section(education_section_data = {})
+		{
+			var education_section_html = education_section_template(education_section_data);
+			$("#education_section_div").append(education_section_html);
+		}
+		$(".add_education_link").click(function(){
+			add_education_section()
+		});
+		$('#education_section_div').on('click', 'a.delete_education_link', function(e) {
+			$(this).parent().remove();
+		});
+		add_education_section();
+	</script>
 {% endblock html_js %}
 
 {% block content%}
@@ -28,7 +62,7 @@
 		<center><h2>{{first_name}} {{last_name}} </h2></center>
 		<div class='spacer'></div>
 		<form class="form-horizontal">
-                    <div style="float: left; width: 48%; padding: 1%;">
+                    <div style="float: left; width: 50%; padding: 1%;">
                         <div class="field">
                             <label>Nationality</label>
                             {{form.nationality}}
@@ -46,20 +80,9 @@
 					<label style="width: 102px;">Joining Date</label>
 					<label style="width: 102px;">Leaving Date</label>
 				</div>
-				<div class="field">
-                                    {{form.company_name}}
-				    {{form.designation}}
-				    {{form.date_of_joining}}
-				    {{form.date_of_leaving}}
-                                </div>
-				<div class="field">
-                                    {{form.company_name}}
-				    {{form.designation}}
-				    {{form.date_of_joining}}
-				    {{form.date_of_leaving}}
-                                </div>
+				<div id="employment_section_div"></div>
 				<div style="text-align: right;">
-					<a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> Add More</a>
+					<a class="btn btn-success add_employment_link" href="javascript:void(0)"><i class="icon-plus-sign icon-white"></i> Add More</a>
 				</div>
                             </fieldset>
                         </div>
@@ -72,20 +95,9 @@
 					<label style="width: 102px;">Branch Date</label>
 					<label style="width: 102px;">Year of Passout</label>
 				</div>
-                                <div class="field">
-                                    {{form.qualification_level}}
-				    {{form.university}}
-				    {{form.branch}}
-				    {{form.year_of_passout}}
-                                </div>
-				<div class="field">
-                                    {{form.qualification_level}}
-				    {{form.university}}
-				    {{form.branch}}
-				    {{form.year_of_passout}}
-                                </div>
+				<div id="education_section_div"></div>
 				<div style="text-align: right;">
-					<a class="btn btn-success" href="#"><i class="icon-plus-sign icon-white"></i> Add More</a>
+					<a class="btn btn-success add_education_link" href="javascript:void(0)"><i class="icon-plus-sign icon-white"></i> Add More</a>
 				</div>
                             </fieldset>
                         </div>
@@ -98,7 +110,7 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div style="float: left; width: 48%; padding: 1%;">
+                    <div style="float: left; width: 46%; padding: 1%;">
                         <div>
                             <fieldset>
                                 <legend>Political View</legend>
