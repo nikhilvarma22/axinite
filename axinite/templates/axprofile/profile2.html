@@ -14,9 +14,9 @@
 	<script>
 		var employment_section_source   = $("#employment_section").html();
 		var employment_section_template = Handlebars.compile(employment_section_source);
-		function add_employment_section(employment_section_data = {})
+		function add_employment_section(employment_section_data)
 		{
-			var employment_section_html = employment_section_template(employment_section_data);
+			var employment_section_html = employment_section_template({});
 			$("#employment_section_div").append(employment_section_html);
 		}
 		$(".add_employment_link").click(function(){
@@ -39,9 +39,9 @@
 	<script>
 		var education_section_source   = $("#education_section").html();
 		var education_section_template = Handlebars.compile(education_section_source);
-		function add_education_section(education_section_data = {})
+		function add_education_section(education_section_data)
 		{
-			var education_section_html = education_section_template(education_section_data);
+			var education_section_html = education_section_template({});
 			$("#education_section_div").append(education_section_html);
 		}
 		$(".add_education_link").click(function(){
@@ -61,7 +61,8 @@
 	<div id='content'>
 		<center><h2>{{first_name}} {{last_name}} </h2></center>
 		<div class='spacer'></div>
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="" method="POST">
+			{% csrf_token %}
                     <div style="float: left; width: 50%; padding: 1%;">
                         <div class="field">
                             <label>Nationality</label>
@@ -115,7 +116,7 @@
                             <fieldset>
                                 <legend>Political View</legend>
                                 <div class="field">
-                                    <input type="radio" value="Liberal"> Liberal
+                                   {{form.religious_views}}
                                 </div>
                             </fieldset>
                         </div>
@@ -123,7 +124,7 @@
                             <fieldset>
                                 <legend>Economic View</legend>
                                 <div class="field">
-                                    <input type="radio" value="Capitalism"> Capitalism
+                                    {{form.political_views}}
                                 </div>
                             </fieldset>
                         </div>

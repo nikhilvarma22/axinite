@@ -25,7 +25,7 @@ from social_auth.backends.twitter import TwitterBackend
 from axinite.axusers.forms.login_form import LoginForm
 from axinite.axusers.models import *
 from axinite.settings import PROJECT_PATH
-from axinite.axusers.forms.additionalsignup_form import AdditionalSignUpform
+from axinite.axusers.forms.additionalsignup_form import AdditionalSignUpForm
 #------------------------------------------------------------------------------
 def registration_confirmation(request):
     try:
@@ -391,38 +391,57 @@ def get_user_friends(backend, details, response, social_user, uid, user, *args,
                 
     return False
 #-------------------------------------------------------------------------------
+#
+#if request.POST:
+#
+#        form = UserSubmittedRecipeForm(request.POST)
+#        if form.is_valid():
+#            recipe = form.save(commit=False)
+#            ingredient_formset = IngredientFormSet(request.POST, instance=recipe)
+#            if ingredient_formset.is_valid():
+#                recipe.save()
+#                ingredient_formset.save()                
+#            return HttpResponseRedirect(reverse('recipes_submit_posted'))
+#    else:
+#        form = UserSubmittedRecipeForm()
+#        ingredient_formset = IngredientFormSet(instance=Recipe())
+#    return render_to_response("recipes/submit.html", {
+#        "form": form,
+#        "ingredient_formset": ingredient_formset,
+#    }, context_instance=RequestContext(request))
+from django.forms.models import inlineformset_factory
 def complete_registration(request):
     """
     this function takes the addional signup details from user
     and save into the database.
     """
     if request.method == "POST":
-        form = AdditionalSignUpform(request.POST)
+        form = AdditionalSignUpForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             nationality = cd['nationality']
             location = cd['location']
-            
-            company_name = cd['company_name']
-            designation = cd['designation']
-            date_of_joining = cd['date_of_joining']
-            date_of_leaving = cd['date_of_leaving']
-            # Education History
-            degree = cd['qualification_level']
-            school = cd['university']
-            branch = cd['branch']
-            year_of_passout = cd['year_of_passout']
-            
+            userprofile_obj = UserProfile.objects.get_or_create(
+                                              user=request.user,
+                                              current_location =location,
+                                              nationality = nationality,
+                                              )
             
             
             for interests in cd['interest']:
-                userprofile_obj.interest.add(interests.id)
+                print interests
+                userprofile_obj[0].interest.add(interests.id)
+            for qual in request.POST.getlist('qualification_level[]'):
+                usereducation_obj = UserEducation.objects.get_or_create(
+                                                      degree=qual,
+                                                      user=request.user,
+                                                      )
             return HttpResponseRedirect('axusers/axprofile')
                 
         else:
             print "Form is invalid"
     else:
-        form = AdditionalSignUpform()
+        form = AdditionalSignUpForm()
     return render_to_response("axprofile/profile2.html",
                             {'form':form},
                             context_instance=RequestContext(request)
