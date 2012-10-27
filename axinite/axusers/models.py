@@ -58,8 +58,8 @@ class UserWorkHistory(models.Model):
     user = models.ForeignKey(User, unique=False)
     position = models.CharField(max_length=200)
     employer = models.CharField(max_length=200)
-    start_date = models.CharField(max_length=200)
-    location = models.CharField(max_length=200)
+    joining_date = models.CharField(max_length=200)
+    leaving_date = models.CharField(max_length=200)
 #-------------------------------------------------------------------------------
 class UserReligiousViews(models.Model):
     user = models.ForeignKey(User, unique=False)

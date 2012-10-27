@@ -16,7 +16,9 @@
 		var employment_section_template = Handlebars.compile(employment_section_source);
 		function add_employment_section(employment_section_data)
 		{
-			var employment_section_html = employment_section_template({});
+			if(!employment_section_data)
+				employment_section_data = {};
+			var employment_section_html = employment_section_template(employment_section_data);
 			$("#employment_section_div").append(employment_section_html);
 		}
 		$(".add_employment_link").click(function(){
@@ -41,7 +43,9 @@
 		var education_section_template = Handlebars.compile(education_section_source);
 		function add_education_section(education_section_data)
 		{
-			var education_section_html = education_section_template({});
+			if(!education_section_data)
+				education_section_data = {};
+			var education_section_html = education_section_template(education_section_data);
 			$("#education_section_div").append(education_section_html);
 		}
 		$(".add_education_link").click(function(){

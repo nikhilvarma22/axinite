@@ -427,15 +427,40 @@ def complete_registration(request):
                                               nationality = nationality,
                                               )
             
-            
-            for interests in cd['interest']:
-                print interests
-                userprofile_obj[0].interest.add(interests.id)
-            for qual in request.POST.getlist('qualification_level[]'):
-                usereducation_obj = UserEducation.objects.get_or_create(
-                                                      degree=qual,
-                                                      user=request.user,
+            #Employment Table Save
+            employment_counter = 0
+            company_name_list = request.POST.getlist('company_name[]')
+            designation_list = request.POST.getlist('designation[]')
+            date_of_joining_list = request.POST.getlist('date_of_joining[]')
+            date_of_leaving_list = request.POST.getlist('date_of_leaving[]')
+            for company_name in request.POST.getlist('company_name[]'):
+                userworkhistory_obj = UserWorkHistory.objects.get_or_create(
+                                                        user=request.user,
+                                                        employer=company_name_list[employment_counter],
+                                                        position=designation_list[employment_counter],
+                                                        joining_date=date_of_joining_list[employment_counter],
+                                                        leaving_date=date_of_leaving_list[employment_counter]
                                                       )
+                employment_counter+=1
+            #Employment Table Save
+            
+            
+            #Qualification Table Save
+            education_counter = 0
+            qualification_list = request.POST.getlist('qualification_level[]')
+            university_list = request.POST.getlist('university[]')
+            branch_list = request.POST.getlist('branch[]')
+            year_of_passout_list = request.POST.getlist('year_of_passout[]')
+            for qualification_level in request.POST.getlist('qualification_level[]'):
+                usereducation_obj = UserEducation.objects.get_or_create(
+                                                        user=request.user,
+                                                        degree=qualification_list[education_counter],
+                                                        school=university_list[education_counter],
+                                                        type=branch_list[education_counter],
+                                                        year=year_of_passout_list[education_counter]
+                                                      )
+                education_counter+=1
+            #Qualification Table Save
             return HttpResponseRedirect('axusers/axprofile')
                 
         else:
